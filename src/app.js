@@ -8,6 +8,7 @@ import messagesRouter from "./router/message.router.js";
 import sessionViewRouter from "./router/session.view.router.js";
 import sessionRouter from "./router/session.router.js";
 import sessionRouter2 from "./router/session.router.js"; //ojo 
+import productsMockRouter from "./router/products.mock.router.js"
 import { Server } from "socket.io";
 import MessageManagerDB from "./dao/managers/messageManagerMongoDB.js"
 import session from "express-session";
@@ -41,6 +42,8 @@ initializePassport()
 app.use(passport.initialize())
 app.use(passport.session())
 
+
+app.use('/', productsMockRouter)
 app.use('/session', sessionRouter2)
 app.use('/', sessionViewRouter)
 app.use('/api/sessions', sessionRouter)
