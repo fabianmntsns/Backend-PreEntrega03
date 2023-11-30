@@ -12,7 +12,7 @@ router.get('/', getProductsController)
 
 router.get('/:pid', getProductByIdController)
 
-router.post('/', isAdmin, addProductController) 
+router.post('/', /*isAdmin,*/ addProductController) // middleware comentado para poder crear un product en Tunder
 
 router.put('/:pid', isAdmin, updateProductController)
 

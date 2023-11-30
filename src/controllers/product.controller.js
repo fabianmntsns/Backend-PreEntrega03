@@ -72,7 +72,7 @@ export const getProductByIdController = async (req, res) => {
 export const addProductController = async (req, res) => {
     const product = req.body
     const result = await productService.create(product)
-        if(!product.title) {
+        if(!product.title || !product.price) {
             CustomError.createError({
                 name: "Error to add product",
                 cause: generateErrorInfo(product),
