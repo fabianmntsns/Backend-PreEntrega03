@@ -16,6 +16,7 @@ import MongoStore from "connect-mongo";
 import passport from "passport";
 import initializePassport from "./config/passport.config.js";
 import config from "./config/config.js";
+import errorHandler  from "./middlewares/error.middleware.js";
 
 
 
@@ -51,6 +52,7 @@ app.use('/api/products', productsRouter)
 app.use('/api/carts', cartsRouter)
 app.use('/api/messages', messagesRouter)
 app.use('/', viewsRouter)
+app.use(errorHandler)
 
 
 const mm = new MessageManagerDB()

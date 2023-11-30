@@ -1,5 +1,8 @@
 import { productService } from "../services/ProductService.js";
 import { PORT } from "../app.js";
+import CustomError from "../services/ErrorControllers/custom_error.js";
+import { generateErrorInfo } from "../services/ErrorControllers/info.js";
+import EErrors from "../services/ErrorControllers/enums.js";
 
 
 
@@ -69,10 +72,18 @@ export const getProductByIdController = async (req, res) => {
 export const addProductController = async (req, res) => {
     const product = req.body
     const result = await productService.create(product)
-    if (typeof result == 'string') {
+        if(!product.title) {
+            CustomError.createError({
+                name: "Error to add product",
+                cause: generateErrorInfo(product),
+                message: "No se pudo agregar el producto",
+                code: EErrors.INVALID_DATA,
+            })
+        }
+    /*if (typeof result == 'string') {
         const error = result.split(' ')
         return res.status(parseInt(error[0].slice(1, 4))).json({ error: result.slice(6) })
-    }
+    } Esta linea estaba anteriormente! */
     res.status(201).json({ status: 'success', payload: result })
 }
 
