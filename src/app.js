@@ -17,6 +17,7 @@ import passport from "passport";
 import initializePassport from "./config/passport.config.js";
 import config from "./config/config.js";
 import errorHandler  from "./middlewares/error.middleware.js";
+import logger from "./logger.js";
 
 
 
@@ -65,7 +66,7 @@ try {
      console.log('DB connected')
 
 
-     const httpServer = app.listen(PORT, () => { console.log('Server Up!') })
+     const httpServer = app.listen(PORT, () => { logger.info('Server Up!') })
      const socketServer = new Server(httpServer)
 
 
