@@ -1,8 +1,8 @@
 export default class CustomError {
     static createError({ name="Error", cause, message, code }) {
-        console.log("cause", cause)
-        console.log("message", message)
-        console.log("code", code)
+        logger.info("cause", cause)
+        logger.info("message", message)
+        logger.info("code", code)
 
         const error = new Error(message, { cause })
         error.name = name

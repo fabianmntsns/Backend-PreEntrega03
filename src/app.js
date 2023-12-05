@@ -63,7 +63,7 @@ const dbUrl= config.mongo.url_db
 
 try {
      await mongoose.connect(dbUrl)
-     console.log('DB connected')
+     logger.info('DB connected')
 
 
      const httpServer = app.listen(PORT, () => { logger.info('Server Up!') })
@@ -71,7 +71,7 @@ try {
 
 
      socketServer.on("connection", async (socket) => {
-          console.log("client connected ID:", socket.id)
+          logger.info("client connected ID:", socket.id)
 
           socket.on('productList', productListSocket => {
                socket.emit("updatedProducts", productListSocket)
@@ -84,5 +84,5 @@ try {
 
 
 } catch (err) {
-     console.log(err.message)
+     logger.error(err.message)
 }

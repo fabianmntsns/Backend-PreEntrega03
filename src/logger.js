@@ -4,20 +4,20 @@ dotenv.config()
 
 const customWinstonLevels = {
     levels: {
-        debug: 0,
-        http: 1,
-        info: 2,
-        warning: 3,
-        error: 4,
+        error: 0,
+        info: 1,
+        debug: 2,
+        http: 3,
+        warning: 4,
         fatal: 5
     },
 
     colors: {
+        error: "red",
         debug: "green",
         http: "blue",
         info: "white",
         warning: "yellow",
-        error: "red",
         fatal: "purple"
     }
 }
@@ -32,8 +32,12 @@ const createLogger = env => {
             transports: [
                 new winston.transports.File({
                     filename: 'server.log',
-                    level: 'fatal',
+                    level: 'info',
                     format: winston.format.json()
+                }),
+                new winston.transports.File({
+                    filename: 'errors.log',
+                    level: 'error'
                 })
             ]
         })
@@ -42,17 +46,27 @@ const createLogger = env => {
             levels: customWinstonLevels.levels,
             transports: [
                 new winston.transports.Console({
-                    level: 'fatal',
+                    level: 'debug',
                     format: winston.format.combine(
                         winston.format.timestamp(),
                         winston.format.colorize(),
                         winston.format.simple()
                     )
                 }),
+                new winston.transports.Console({
+                    level: 'error',
+                    format: winston.format.combine(
+                        winston.format.timestamp(),
+                        winston.format.colorize(),
+                        winston.format.simple()
+                    )  
+                })
             ]
-        })
+        })  
     }
-}
+} 
+
+
 
 
 const logger = createLogger(process.env.ENVIRONMENT)

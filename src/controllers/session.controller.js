@@ -44,7 +44,7 @@ export const logoutController = (req, res) => {
 export const githubController = (req, res) => { }
 
 export const githubcallbackController = async (req, res) => {
-    console.log('Callback: ', req.user)
+    logger.info('Callback: ', req.user)
     req.session.user = req.user
     res.redirect('/products')
 }
