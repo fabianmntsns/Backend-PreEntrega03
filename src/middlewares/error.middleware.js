@@ -1,4 +1,5 @@
 import EErrors from "../services/ErrorControllers/enums.js";
+import logger from "../logger.js";
 
 
 export default(error, req, res, next) => {

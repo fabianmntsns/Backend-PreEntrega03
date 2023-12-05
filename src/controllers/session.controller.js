@@ -1,4 +1,5 @@
 import UserProfileDTO from "../DTO/sessionDTO.js"
+import logger from "../logger.js"
 
 
 export const registerController = async (req, res) => {

@@ -2,6 +2,7 @@ import express from "express";
 import viewsRouter from "./router/view.router.js"
 import handlebars from 'express-handlebars'
 import mongoose from "mongoose";
+import loggerRouter from "./router/logger.router.js";
 import productsRouter from "./router/product.router.js";
 import cartsRouter from "./router/cart.router.js";
 import messagesRouter from "./router/message.router.js";
@@ -53,6 +54,7 @@ app.use('/api/products', productsRouter)
 app.use('/api/carts', cartsRouter)
 app.use('/api/messages', messagesRouter)
 app.use('/', viewsRouter)
+app.use('/', loggerRouter)
 app.use(errorHandler)
 
 

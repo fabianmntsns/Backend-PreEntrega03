@@ -1,3 +1,6 @@
+import logger from "../../logger.js"
+
+
 export default class CustomError {
     static createError({ name="Error", cause, message, code }) {
         logger.info("cause", cause)
