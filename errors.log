@@ -1,9 +1,1 @@
-{"level":"info","message":"DB connected"}
-{"level":"info","message":"Server Up!"}
-{"level":"info","message":"DB connected"}
-{"level":"info","message":"Server Up!"}
-{"level":"info","message":"DB connected"}
-{"level":"info","message":"Server Up!"}
-{"level":"error","message":"Test de logger error"}
-{"level":"error","message":"Test de logger error"}
-{"level":"error","message":"Test de logger error"}
+{"level":"error","message":"Producto no encontrado"}

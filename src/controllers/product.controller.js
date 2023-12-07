@@ -3,6 +3,7 @@ import { PORT } from "../app.js";
 import CustomError from "../services/ErrorControllers/custom_error.js";
 import { generateErrorInfo } from "../services/ErrorControllers/info.js";
 import EErrors from "../services/ErrorControllers/enums.js";
+import logger from "../logger.js";
 
 
 
@@ -53,7 +54,8 @@ export const getProductsController = async (req, res) => {
 
     if (typeof result == 'string') {
         const error = result.split(' ')
-        return res.status(parseInt(error[0].slice(1, 4))).json({ error: result.slice(6) })
+        return logger.error("Error al solicitar los productos", error.message) 
+        //return res.status(parseInt(error[0].slice(1, 4))).json({ error: result.slice(6) })
     }
     res.status(200).json(result)
 }
@@ -63,9 +65,10 @@ export const getProductByIdController = async (req, res) => {
     const result = await productService.getById(id)
     if (typeof result == 'string') {
         const error = result.split(' ')
-        return res.status(parseInt(error[0].slice(1, 4))).json({ error: result.slice(6) })
+        return logger.error("Producto no encontrado", error.message) 
+        // res.status(parseInt(error[0].slice(1, 4))).json({ error: result.slice(6) })
+        
     }
-
     res.status(200).json({ status: 'success', payload: result })
 }
 
@@ -80,10 +83,6 @@ export const addProductController = async (req, res) => {
                 code: EErrors.INVALID_DATA,
             })
         }
-    /*if (typeof result == 'string') {
-        const error = result.split(' ')
-        return res.status(parseInt(error[0].slice(1, 4))).json({ error: result.slice(6) })
-    } Esta linea estaba anteriormente! */
     res.status(201).json({ status: 'success', payload: result })
 }
 
@@ -93,7 +92,8 @@ export const updateProductController = async (req, res) => {
     const result = await productService.update(id, updateProduct)
     if (typeof result == 'string') {
         const error = result.split(' ')
-        return res.status(parseInt(error[0].slice(1, 4))).json({ error: result.slice(6) })
+        return logger.error("No se pudo actualizar el producto", error.message) 
+       // return res.status(parseInt(error[0].slice(1, 4))).json({ error: result.slice(6) })
     }
     res.status(200).json({ status: 'success', payload: result })
 }
@@ -103,7 +103,8 @@ export const deleteProductController = async (req, res) => {
     const result = await productService.delete(id)
     if (typeof result == 'string') {
         const error = result.split(' ')
-        return res.status(parseInt(error[0].slice(1, 4))).json({ error: result.slice(6) })
+        return logger.error("Producto no encontrado", error.message) 
+       // return res.status(parseInt(error[0].slice(1, 4))).json({ error: result.slice(6) })
     }
     res.status(200).json({ status: 'success', payload: result })
 }
@@ -138,7 +139,8 @@ export const productsViewController = async (req, res) => {
         })
     } else {
         const error = pageResult.split(' ')
-        return res.status(parseInt(error[0].slice(1, 4))).json({ error: pageResult.slice(6) })
+        return logger.error("Error inesperado", error.message) 
+       // return res.status(parseInt(error[0].slice(1, 4))).json({ error: pageResult.slice(6) })
     }
 }
 
@@ -156,7 +158,8 @@ export const getProductByIdViewController = async (req, res) => {
     const result = await productService.getById(pid)
     if (typeof result == 'string') {
         const error = result.split(' ')
-        return res.status(parseInt(error[0].slice(1, 4))).json({ error: result.slice(6) })
+        return logger.error("Error inesperado", error.message) 
+        //return res.status(parseInt(error[0].slice(1, 4))).json({ error: result.slice(6) })
     }
 
     res.render('product', { prod: result })

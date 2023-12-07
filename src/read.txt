@@ -1,1 +1,4 @@
-Continuar desde el 4to punto
+Agregar logs a otras funciones de la app.
+Revisar el endpoint loggerTest
+
+Testear!
