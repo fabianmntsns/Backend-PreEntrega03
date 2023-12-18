@@ -67,3 +67,11 @@ export const profileViewController = (req, res) => {
 
 }
 
+export const forgetPasswordViewController = (req, res ) => {
+    res.render('sessions/forget-password')
+}
+
+
+export const resetPasswordViewController = (req, res) => {
+    res.redirect(`/api/sessions/verify-token/${req.params.token}`)
+}
