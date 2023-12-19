@@ -24,6 +24,11 @@ export default {
         _id: process.env.ADMIN_ID,
         email: process.env.EMAIL_ADMIN,
         password: process.env.PASSWORD_ADMIN,
+    },
+
+    codernodemailer: {
+        user: process.env.USER_NODEMAILER,
+        password: process.env.PASSWORD_NODEMAILER
     }
 
 

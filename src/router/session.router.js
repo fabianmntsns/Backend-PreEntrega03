@@ -1,6 +1,10 @@
 import { Router } from "express";
 import passport from "passport";
 import { failLoginController, failRegisterController, githubController, githubcallbackController, loginController, logoutController, registerController } from "../controllers/session.controller.js";
+import UserModel from "../dao/models/user.model.js";
+import { generateRandomString } from "../utils.js";
+import userPasswordModel from "../dao/models/user-password.model.js";
+import { config } from "dotenv";
 
 const router = Router()
 
@@ -23,5 +27,31 @@ router.get('/github', passport.authenticate('github', {scope: ['user:email']}), 
 
 router.get('/githubcallback', passport.authenticate('github', { failureRedirect: '/login' }), githubcallbackController)
 
-
+router.get('/forget-password', async (req, res) => {
+    const email = req.body.email
+    const user = await UserModel.findOne({ email })
+        if(!user) {
+            return res.status(404).json({ status: 'error', error: 'Usuario no encontrado'})
+        }
+    const token = generateRandomString(16)
+    await userPasswordModel.create({ email, token })
+    const mailerConfig = {
+        service: 'gmail',
+        auth: { user: config.codernodemailer.user , pass: config.codernodemailer.password }
+    }
+    let transporter = nodemailer.createTransport(mailerConfig)
+    let message = {
+        from: config.codernodemailer.user,
+        to: email,
+        subject: '[CODERSHOP] Reset your password',
+        html: `You have asked to reset your password. You can do it here:
+         <a href="http://localhost:8080/reset-password/${token}">`
+    }
+    try {
+        await transporter.sendMail(message)
+        res.json({ status: 'success', message: `Email successfully sent to ${email} in order to reset password` })
+    } catch (err) {
+        res.status(500).json({ status: 'error', error: err.message })
+    }
+})
 export default router
