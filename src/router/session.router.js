@@ -54,4 +54,24 @@ router.get('/forget-password', async (req, res) => {
         res.status(500).json({ status: 'error', error: err.message })
     }
 })
+
+router.get('/verify-token/:token', async (req, res) => {
+    const userPassword = await UserPasswordModel.findOne({ token: req.params.token })
+    if (!userPassword) {
+        return res.status(404).json({ status: 'error', error: 'Token no válido / El token ha expirado' })
+    }
+    const user = userPassword.email
+    res.render('sessions/reset-password', { user })
+})
+
+router.post('/reset-password/:user', async (req, res) => {
+    try {
+        const user = await UserModel.findOne({ email: req.params.user })
+        await UserModel.findByIdAndUpdate(user._id, { password: createHash(req.body.newPassword) })
+        res.json({ status: 'success', message: 'Se ha creado una nueva contraseña' })
+        await userPasswordModel.deleteOne({ email: req.params.user })
+    } catch(err) {
+        res.json({ status: 'error', error: err.message })
+    }
+})
 export default router
