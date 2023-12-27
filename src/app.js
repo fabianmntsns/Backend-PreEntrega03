@@ -19,10 +19,12 @@ import initializePassport from "./config/passport.config.js";
 import config from "./config/config.js";
 import errorHandler  from "./middlewares/error.middleware.js";
 import logger from "./logger.js";
+import swaggerJSDoc from "swagger-jsdoc";
+import swaggerUiExpress from "swagger-ui-express";
 
 
 
-const app = express()
+const app = express() 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("./src/public"))
@@ -30,6 +32,19 @@ app.engine('handlebars', handlebars.engine())
 app.set('views', './src/views')
 app.set('view engine', 'handlebars')
 
+const swaggerOptions = {
+     definition: {
+          openapi: "3.0.1",
+          info: {
+               title: 'Documentación E-commerce Coder',
+               description: 'Descripción Proyecto Backend'
+          }
+     },
+     apis: ['./docs/**/*.yaml']
+}
+
+const specs = swaggerJSDoc(swaggerOptions)
+app.use('/docs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
 
 app.use(session({
      store: MongoStore.create({
