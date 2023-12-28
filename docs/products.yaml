@@ -1,0 +1,172 @@
+paths:
+  /api/products:
+    get:
+      tags: 
+        - Products
+      summary: Obtener todos los productos
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+    post:
+      tags: 
+        - Products
+      security:
+        - bearerAuth: []
+      summary: Crear un nuevo producto
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+              type: object
+              properties:
+                title:
+                  type: string
+                category:
+                  type: string
+                size:
+                  type: string
+                code:
+                  type: string
+                description:
+                  type: string
+                price:
+                  type: number
+                stock:
+                  type: number
+                thumbnail:
+                  type: string
+                status:
+                  type: boolean
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+
+  /api/products/{pid}:
+    get:
+      tags: 
+        - Products
+      summary: Obtener un producto por ID
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: ID del producto
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+    
+    put:
+      tags: 
+        - Products
+      summary: Actualizar un producto por ID
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: ID del producto
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+              type: object
+              properties:
+                title:
+                  type: string
+                category:
+                  type: string
+                size:
+                  type: string
+                code:
+                  type: string
+                description:
+                  type: string
+                price:
+                  type: number
+                stock:
+                  type: number
+                thumbnail:
+                  type: string
+                status:
+                  type: boolean   
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+    delete:
+      tags:
+        - Products
+      summary: Eliminar un producto por ID
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: ID del producto
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+  
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        title:
+          type: string
+        category:
+          type: string
+        size:
+          type: string
+        code:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+        stock:
+          type: number
+        thumbnail:
+          type: string
+        status:
+          type: boolean
+      required:
+        - title
+        - category
+        - price
+        - stock
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
