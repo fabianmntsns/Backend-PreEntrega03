@@ -73,8 +73,8 @@ class ProductManagerDB {
         try {
             const objectId = new mongoose.Types.ObjectId(id)
             const result = await productsModel.deleteOne({ _id: objectId })
-            if (!result.deletedCount) return '[404] No se pudo eliminar este producto'
-            return this.getProducts()
+            if (!result.deletedCount) return '[404] No se encontró el ID del producto a eliminar.'
+            return this.getProducts({}, productsModel)
         } catch (e) {
             return "[400] " + e.message
         }

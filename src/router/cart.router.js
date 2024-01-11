@@ -14,8 +14,7 @@ const router = Router()
 router.post('/', addCartController)
 
 router.get('/:cid', getCartByIdController)
-
-router.post('/:cid/product/:pid', [publicRoutes, isUser], addProductToCartController)
+router.post('/:cid/product/:pid', /*[publicRoutes, isUser],*/ addProductToCartController)
 
 router.delete('/:cid/products/:pid',publicRoutes, deleteProductFromCartController)
 

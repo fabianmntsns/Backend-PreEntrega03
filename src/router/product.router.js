@@ -16,6 +16,6 @@ router.post('/', /*isAdmin,*/ addProductController) // middleware comentado para
 
 router.put('/:pid', isAdmin, updateProductController)
 
-router.delete('/:pid', isAdmin, deleteProductController)
+router.delete('/:pid', /*isAdmin,*/ deleteProductController)
 
 export default router

@@ -54,8 +54,8 @@ export const getProductsController = async (req, res) => {
 
     if (typeof result == 'string') {
         const error = result.split(' ')
+        res.status(parseInt(error[0].slice(1, 4))).json({ error: result.slice(6) })
         return logger.error("Error al solicitar los productos", error.message) 
-        //return res.status(parseInt(error[0].slice(1, 4))).json({ error: result.slice(6) })
     }
     res.status(200).json(result)
 }
@@ -65,8 +65,8 @@ export const getProductByIdController = async (req, res) => {
     const result = await productService.getById(id)
     if (typeof result == 'string') {
         const error = result.split(' ')
+        res.status(parseInt(error[0].slice(1, 4))).json({ error: result.slice(6) })
         return logger.error("Producto no encontrado", error.message) 
-        // res.status(parseInt(error[0].slice(1, 4))).json({ error: result.slice(6) })
         
     }
     res.status(200).json({ status: 'success', payload: result })
@@ -92,8 +92,8 @@ export const updateProductController = async (req, res) => {
     const result = await productService.update(id, updateProduct)
     if (typeof result == 'string') {
         const error = result.split(' ')
+        res.status(parseInt(error[0].slice(1, 4))).json({ error: result.slice(6) })
         return logger.error("No se pudo actualizar el producto", error.message) 
-       // return res.status(parseInt(error[0].slice(1, 4))).json({ error: result.slice(6) })
     }
     res.status(200).json({ status: 'success', payload: result })
 }
@@ -101,10 +101,11 @@ export const updateProductController = async (req, res) => {
 export const deleteProductController = async (req, res) => {
     const id = req.params.pid
     const result = await productService.delete(id)
+    console.log(result)
     if (typeof result == 'string') {
         const error = result.split(' ')
+        res.status(parseInt(error[0].slice(1, 4))).json({ error: result.slice(6) })
         return logger.error("Producto no encontrado", error.message) 
-       // return res.status(parseInt(error[0].slice(1, 4))).json({ error: result.slice(6) })
     }
     res.status(200).json({ status: 'success', payload: result })
 }
@@ -139,8 +140,8 @@ export const productsViewController = async (req, res) => {
         })
     } else {
         const error = pageResult.split(' ')
+        res.status(parseInt(error[0].slice(1, 4))).json({ error: pageResult.slice(6) })
         return logger.error("Error inesperado", error.message) 
-       // return res.status(parseInt(error[0].slice(1, 4))).json({ error: pageResult.slice(6) })
     }
 }
 
@@ -158,8 +159,8 @@ export const getProductByIdViewController = async (req, res) => {
     const result = await productService.getById(pid)
     if (typeof result == 'string') {
         const error = result.split(' ')
+        res.status(parseInt(error[0].slice(1, 4))).json({ error: result.slice(6) })
         return logger.error("Error inesperado", error.message) 
-        //return res.status(parseInt(error[0].slice(1, 4))).json({ error: result.slice(6) })
     }
 
     res.render('product', { prod: result })

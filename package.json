@@ -5,7 +5,10 @@
   "main": "src/app.js",
   "scripts": {
     "start": "node .",
-    "dev": "nodemon ."
+    "dev": "nodemon .",
+    "testCart": "mocha ./test/cart.test.js",
+    "testProducts": "mocha ./test/products.test.js",
+    "testSession": "mocha ./test/session.test.js"
   },
   "repository": {
     "type": "git",
@@ -38,5 +41,10 @@
     "swagger-ui-express": "^5.0.0",
     "winston": "^3.11.0"
   },
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0",
+    "supertest": "^6.3.3"
+  }
 }

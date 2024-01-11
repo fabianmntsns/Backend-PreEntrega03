@@ -30,7 +30,7 @@ class CartRepository {
     }
 
     deleteAll = async (cid) => {
-        return await this.dao.delleteAllProducts(cid, this.model)
+        return await this.dao.deleteAllProducts(cid, this.model)
     }
 }
 

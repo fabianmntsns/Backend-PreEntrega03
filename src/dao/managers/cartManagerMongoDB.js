@@ -156,7 +156,7 @@ class CartManagerDB {
     async deleteAllProducts(cid, CartModel) {
         try {
             const objectId = new mongoose.Types.ObjectId(cid)
-            return await CartModel.findOneAndUpdate({ _id: objectId }, { products: [] })
+            return await CartModel.findOneAndUpdate({ _id: objectId }, { products: [] }, { returnOriginal: false })
         } catch (e) {
             return "[400] " + e.message
         }
